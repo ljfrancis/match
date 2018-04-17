@@ -1,5 +1,14 @@
 .card {
-  background-color: #bbb;
-  width: 200px;
-  height: 300px;
+  background-color: grey;
+  width: 100px;
+  height: 200px;
+  margin: 10px;
 }
+
+.card-flipped {
+	background: linear-gradient(
+    rgb(255, 0, 0), 
+    rgb(255, 0, 0)
+  )
+}
+
