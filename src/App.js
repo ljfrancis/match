@@ -41,6 +41,10 @@ export default class App extends Component {
   };
 
   handleCardFlipAt = index => {
+    //flip count increases
+    this.setState({flips: this.state.flips + 1})
+
+    //set card to be showing
     this.setState({
       cards: this.state.cards.map((card, i) => {
         if (i === index) {
@@ -48,32 +52,37 @@ export default class App extends Component {
             ...card,
             show: !card.show
           };
-        }
+        } 
         return card;
       })
     });
 
-    console.log(index);
+    console.log(this.state.flips);
 
+    //if two cards are flipped and don't match, return them
+    const resetCards = () => {
+      if (this.state.flips > 1) {
+        this.setState({
+          flips: 0,
+          cards: this.state.cards.map((card) => {
+            if (card.match === false && card.show === true) {
+              return {
+                ...card,
+                show: false
+              };
+            }
+            return card;
+          })
+        });
+      } else {
+        //flip count increases
+        this.setState({flips: this.state.flips + 1})
+      }
+    }; 
 
-    if (this.state.flips === 2) {
-      this.setState({
-        flips: 0,
-        cards: this.state.cards.map((card) => {
-          if (card.match === false && card.show === true) {
-            return {
-              ...card,
-              show: false
-            };
-          }
-          return card;
-        })
-      });
-    } else {
-      this.setState({flips: this.state.flips + 1})
-    }
-
+    setTimeout(resetCards, 1000);
   };
+
 
 
 
@@ -95,7 +104,7 @@ export default class App extends Component {
         </div>
     </div>
     );
-  }
-}
+  };
+};
 
 

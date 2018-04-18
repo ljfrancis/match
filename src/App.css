@@ -1,8 +1,11 @@
 .card {
-  background-color: grey;
   width: 100px;
   height: 200px;
   margin: 10px;
+}
+
+.card-hidden {
+	background-color: grey;
 }
 
 .card-flipped {
