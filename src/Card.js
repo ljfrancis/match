@@ -17,7 +17,7 @@ export default class Card extends Component {
   render() {
     return (
       <div className={ this.state.show ? "card" : "card card-flipped"}
-        onClick={() => this.props.handleCardFlip(this.props.index)}
+        onClick={() => this.props.handleCardFlipAt(this.props.index)}
       //if show = false -> className="face-down"
       >
       <img href={this.props.image} alt=""></img>
@@ -31,5 +31,5 @@ Card.PropTypes = {
     id: PropTypes.number,
     image: PropTypes.string,
     show: PropTypes.bool,
-    handleCardFlip: PropTypes.func
+    handleCardFlipAt: PropTypes.func
 };
