@@ -1,17 +1,17 @@
 .card {
-  width: 100px;
-  height: 200px;
+  width: 50px;
+  height: 100px;
   margin: 10px;
 }
 
-.card-hidden {
+/*.card-hidden {
 	background-color: grey;
-}
+}*/
 
 .card-flipped {
 	background: linear-gradient(
-    rgb(255, 0, 0), 
-    rgb(255, 0, 0)
+    rgb(100, 100, 100), 
+    rgb(100, 100, 100)
   )
 }
 

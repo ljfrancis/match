@@ -8,28 +8,41 @@ import Card from './Card';
 
 
 //unique cards
-let cards = [
+let uniqueCards = [
   {
   id: 1,
-  image: "x",
-  show: true,
+  color: "#06f",
+  show: false,
   match: false
   },
   {
   id: 2,
-  image: "o",
-  show: true,
+  color: "#f55",
+  show: false,
   match: false
   },
   {
   id: 3,
-  image: "z",
-  show: true,
+  color: "#fe0",
+  show: false,
   match: false
   },
 ];
 
 //duplicate and randomize card order
+let cards = [];
+
+for (var i=0; i < uniqueCards.length; i++) {
+  cards.push(uniqueCards[i]);
+  cards.push(uniqueCards[i]);
+};
+
+for (var i=0; i<cards.length; i++) {
+  let j = Math.floor(Math.random() * cards.length);
+  let temp = cards[i];
+  cards[i] = cards[j];
+  cards[j] = temp;
+};
 
 
 export default class App extends Component {
@@ -95,7 +108,7 @@ export default class App extends Component {
               <Card 
                 index={index}
                 id={card.id}
-                image={card.image}
+                color={card.color}
                 show={card.show}
                 handleCardFlipAt={this.handleCardFlipAt}
               />
