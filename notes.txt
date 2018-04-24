@@ -42,9 +42,10 @@ React Components
 
 
 
-File Structure
+Questions:
 
-CardLayout.js
-Card.js
+Using an object?
+Bad practice to have styles in html (card)?
+
 
 
