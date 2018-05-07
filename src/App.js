@@ -11,44 +11,72 @@ const cardColors = ["#ee4035", "#f37736", "#fdf498", "#7bc043",
                     "#ff8b94", "#011f4b", "#a2798f", "#008080"];
 
 
-//generate unique cards
-let uniqueCards = [];
-const size = 8;
 
-for (let i=0; i<=size; i++) {
-  uniqueCards.push({
-    id: i,
-    color: cardColors[i],
-    show: false,
-    match: false
-  })
-} 
-
-
-//duplicate and randomize card order
-let cards = [];
-
-for (var i=0; i < uniqueCards.length; i++) {
-  cards.push(uniqueCards[i]);
-  cards.push(uniqueCards[i]);
-};
-
-for (var i=0; i<cards.length; i++) {
-  let j = Math.floor(Math.random() * cards.length);
-  let temp = cards[i];
-  cards[i] = cards[j];
-  cards[j] = temp;
-};
 
 
 export default class App extends Component {
 
-  state = {
-    cards: cards,
+
+  constructor = () => {
+    this.cardColors = ["#ee4035", "#f37736", "#fdf498", "#7bc043", 
+                        "#0392cf", "#4f372d", "#673888", "#a8e6cf",
+                        "#ff8b94", "#011f4b", "#a2798f", "#008080"];
+
+    this.state = {
+    cards: this.setCards(8),
     win: false,
     flips: 0
-  };
+    };
+  }
 
+
+  /*
+  * create duplicate cards and randomizes them
+  * 
+  * @param size int - number of unique cards
+  * @return cards - randomized set of card pairs
+  */
+  setCards = (size) => {
+
+    let uniqueCards = [];
+
+    //create unique cards
+    for (let i=0; i<=size; i++) {
+      uniqueCards.push({
+        id: i,
+        color: this.cardColors[i],
+        show: false,
+        match: false
+      })
+    } 
+
+
+    //duplicate and randomize card order
+    let cards = [];
+
+    for (var i=0; i < uniqueCards.length; i++) {
+      cards.push(uniqueCards[i]);
+      cards.push(uniqueCards[i]);
+    };
+
+    for (var i=0; i<cards.length; i++) {
+      let j = Math.floor(Math.random() * cards.length);
+      let temp = cards[i];
+      cards[i] = cards[j];
+      cards[j] = temp;
+    };
+
+    return cards;
+  }
+
+  
+
+  /*
+  * handle flipping cards on click
+  * 
+  * @param index int - index of card clicked
+  * @return void
+  */
   handleCardFlipAt = index => {
 
     if (this.state.flips < 2) {
