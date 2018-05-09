@@ -5,19 +5,14 @@ import './index.css';
 
 import Card from './Card';
 
-//card colors
-const cardColors = ["#ee4035", "#f37736", "#fdf498", "#7bc043", 
-                    "#0392cf", "#4f372d", "#673888", "#a8e6cf",
-                    "#ff8b94", "#011f4b", "#a2798f", "#008080"];
-
-
 
 
 
 export default class App extends Component {
 
 
-  constructor = () => {
+  constructor() {
+    super();
     this.cardColors = ["#ee4035", "#f37736", "#fdf498", "#7bc043", 
                         "#0392cf", "#4f372d", "#673888", "#a8e6cf",
                         "#ff8b94", "#011f4b", "#a2798f", "#008080"];
@@ -79,13 +74,14 @@ export default class App extends Component {
   */
   handleCardFlipAt = index => {
 
+    var timeout;
     if (this.state.flips < 2) {
-    //flip count increases
-    this.setState({flips: this.state.flips + 1})
+      clearTimeout(timeout);
 
-
-    //set card to be showing
     this.setState({
+      //flip count increases
+      flips: this.state.flips + 1,
+      //set card to be showing
       cards: this.state.cards.map((card, i) => {
         if (i === index) {
           return {
@@ -97,6 +93,14 @@ export default class App extends Component {
       })
     });
 
+    } 
+
+    componentDidUpdate() {
+    console.log(this.state.flips);
+    if (this.state.flips == 2) {
+      console.log("hi");
+      timeout = setTimeout(resetCards, 2000);
+    }
     }
 
 
@@ -104,8 +108,6 @@ export default class App extends Component {
 
     //if two cards are flipped and don't match, return them
     const resetCards = () => {
-      console.log(this.state.flips);
-      if (this.state.flips == 2) {
 
         //get new flipped cards
         let showingCards = [];
@@ -120,6 +122,7 @@ export default class App extends Component {
         if(showingCards[0].id === showingCards[1].id) {
           matchID = showingCards[0].id;
         }
+
 
 
 
@@ -141,10 +144,10 @@ export default class App extends Component {
             return card;
           })
         });
-      } 
+
+        console.log(this.state.flips);
     }; 
 
-    setTimeout(resetCards, 2000);
   };
 
 
