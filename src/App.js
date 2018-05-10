@@ -4,6 +4,7 @@ import './App.css';
 import './index.css';
 
 import Card from './Card';
+import LevelButton from './Buttons';
 
 
 
@@ -18,9 +19,9 @@ export default class App extends Component {
                         "#ff8b94", "#011f4b", "#a2798f", "#008080"];
 
     this.state = {
-    cards: this.setCards(8),
-    win: false,
-    flips: 0
+    cards: this.setCards(6),
+    flips: 0,
+    matches: 0
     };
   }
 
@@ -36,7 +37,7 @@ export default class App extends Component {
     let uniqueCards = [];
 
     //create unique cards
-    for (let i=0; i<=size; i++) {
+    for (let i=0; i<size; i++) {
       uniqueCards.push({
         id: i,
         color: this.cardColors[i],
@@ -63,20 +64,16 @@ export default class App extends Component {
 
     return cards;
   }
-
   
 
-  /*
+  /***********************************
   * handle flipping cards on click
   * 
   * @param index int - index of card clicked
   * @return void
-  */
+  **************************************/
   handleCardFlipAt = index => {
-
-    var timeout;
     if (this.state.flips < 2) {
-      clearTimeout(timeout);
 
     this.setState({
       //flip count increases
@@ -91,66 +88,95 @@ export default class App extends Component {
         } 
         return card;
       })
+    },  () => {
+      //when two cards are flipped check for a match
+      if (this.state.flips == 2) {
+      setTimeout(this.resetCards, 2000);
+      }
+      console.log(this.state.matches);
+      if (this.state.matches == this.state.size){
+        this.handleWin();
+      }
     });
 
-    } 
-
-    componentDidUpdate() {
-    console.log(this.state.flips);
-    if (this.state.flips == 2) {
-      console.log("hi");
-      timeout = setTimeout(resetCards, 2000);
-    }
     }
 
 
+  }
+
+  /***********************************
+  * check for match in two flipped cards
+  * reset cards if no match found
+  * 
+  * @param void
+  * @return void
+  **************************************/
+  //if two cards are flipped and don't match, return them
+  resetCards = () => {
+
+    //get new flipped cards
+    let showingCards = [];
+    this.state.cards.map((card) => {
+    if (card.match === false &&  card.show === true) {
+      showingCards.push(card);
+    }
+    });
+
+    //check if showing cards are matching
+    let matchID = -1;
+    if(showingCards[0].id === showingCards[1].id) {
+      matchID = showingCards[0].id;
+    }
 
 
-    //if two cards are flipped and don't match, return them
-    const resetCards = () => {
-
-        //get new flipped cards
-        let showingCards = [];
-        this.state.cards.map((card) => {
-        if (card.match === false &&  card.show === true) {
-          showingCards.push(card);
+    this.setState({
+      flips: 0,
+      matches: this.state.matches + 1,
+      cards: this.state.cards.map((card) => {
+        if (card.id === matchID) {
+          return {
+            ...card,
+            match: true
+          };
         }
-        });
-
-        //check if showing cards are matching
-        let matchID = -1;
-        if(showingCards[0].id === showingCards[1].id) {
-          matchID = showingCards[0].id;
+        if (card.match === false && card.show === true) {
+          return {
+            ...card,
+            show: false
+          };
         }
+        return card;
+      })
+    });
+  }
 
 
+  /***********************************
+  * set size of cards array based on difficulty selected
+  * 
+  * @param size
+  * @return void
+  **************************************/
+  handleLevelChange = (size) => {
+    this.setState({
+      cards: this.setCards(size)
+    })
+  }
 
 
-        this.setState({
-          flips: 0,
-          cards: this.state.cards.map((card) => {
-            if (card.id === matchID) {
-              return {
-                ...card,
-                match: true
-              };
-            }
-            if (card.match === false && card.show === true) {
-              return {
-                ...card,
-                show: false
-              };
-            }
-            return card;
-          })
-        });
-
-        console.log(this.state.flips);
-    }; 
-
-  };
-
-
+  /***********************************
+  * alert user and reset cards
+  * 
+  * @param size
+  * @return void
+  **************************************/
+  handleWin = () => {
+    alert("You won! ");
+    this.setState({
+      cards: this.setCards(this.state.size)
+    })
+  }
+  
 
 
   render() {
@@ -168,6 +194,11 @@ export default class App extends Component {
               />
             );
           })}
+        </div>
+        <div id="button-row">
+          <LevelButton size={6} level="Easy" handleLevelChange={this.handleLevelChange}/>
+          <LevelButton size={9} level="Medium" handleLevelChange={this.handleLevelChange}/>
+          <LevelButton size={12} level="Hard" handleLevelChange={this.handleLevelChange}/>
         </div>
     </div>
     );

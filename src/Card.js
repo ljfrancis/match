@@ -12,7 +12,6 @@ export default class Card extends Component {
         style={{backgroundColor: this.props.color}}
         onClick={() => this.props.handleCardFlipAt(this.props.index)}
       >
-      <img href={this.props.image} alt=""></img>
       </div>
     )
   };
