@@ -21,7 +21,8 @@ export default class App extends Component {
     this.state = {
     cards: this.setCards(6),
     flips: 0,
-    matches: 0
+    matches: 0,
+    size: 0
     };
   }
 
@@ -94,9 +95,7 @@ export default class App extends Component {
       setTimeout(this.resetCards, 2000);
       }
       console.log(this.state.matches);
-      if (this.state.matches == this.state.size){
-        this.handleWin();
-      }
+      console.log(this.state.cards.length / 2);
     });
 
     }
@@ -120,20 +119,22 @@ export default class App extends Component {
     if (card.match === false &&  card.show === true) {
       showingCards.push(card);
     }
+    console.log(showingCards);
     });
 
     //check if showing cards are matching
     let matchID = -1;
+    let match = false;
     if(showingCards[0].id === showingCards[1].id) {
       matchID = showingCards[0].id;
     }
 
-
+    let matched = false;
     this.setState({
       flips: 0,
-      matches: this.state.matches + 1,
-      cards: this.state.cards.map((card) => {
+      cards: this.state.cards.map((card) => { 
         if (card.id === matchID) {
+          matched = true;
           return {
             ...card,
             match: true
@@ -146,7 +147,12 @@ export default class App extends Component {
           };
         }
         return card;
-      })
+        }),
+      matches: ((matched) ? (this.state.matches + 1) : this.state.matches)
+    }, () => {
+      if (this.state.matches == (this.state.cards.length / 2)){
+        this.handleWin();
+      }
     });
   }
 
@@ -159,7 +165,8 @@ export default class App extends Component {
   **************************************/
   handleLevelChange = (size) => {
     this.setState({
-      cards: this.setCards(size)
+      cards: this.setCards(size),
+      size: size
     })
   }
 
@@ -171,9 +178,11 @@ export default class App extends Component {
   * @return void
   **************************************/
   handleWin = () => {
-    alert("You won! ");
     this.setState({
-      cards: this.setCards(this.state.size)
+      cards: this.setCards(this.state.size),
+      matches: 0
+    }, () =>{
+      alert("You won! ");
     })
   }
   
@@ -196,7 +205,7 @@ export default class App extends Component {
           })}
         </div>
         <div id="button-row">
-          <LevelButton size={6} level="Easy" handleLevelChange={this.handleLevelChange}/>
+          <LevelButton size={2} level="Easy" handleLevelChange={this.handleLevelChange}/>
           <LevelButton size={9} level="Medium" handleLevelChange={this.handleLevelChange}/>
           <LevelButton size={12} level="Hard" handleLevelChange={this.handleLevelChange}/>
         </div>
