@@ -1,20 +1,29 @@
 .card {
   width: 80px;
-  height: 120px;
+  height: 100px;
   margin: 10px;
 }
 
 
 .card-flipped {
 	background: linear-gradient(
-    rgb(100, 100, 100), 
-    rgb(100, 100, 100)
+    rgb(255, 255, 255), 
+    rgb(255, 255, 255)
   )
 }
 
+
 .card-layout {
-	width: 600px;
 	display: flex;
 	flex-wrap: wrap;
+  width: 640px;
 }
 
+.App {
+  height: 100vh;
+}
+
+.card-box {
+  width: 640px;
+  height: 80%;
+}

@@ -190,8 +190,8 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App">
-         <div className="card-layout">
+      <div className="App bg-dark align-items-center p-5">
+         <div className="container card-layout">
             {this.state.cards.map((card, index) =>{
             return(
               <Card 
@@ -204,8 +204,8 @@ export default class App extends Component {
             );
           })}
         </div>
-        <div id="button-row">
-          <LevelButton size={2} level="Easy" handleLevelChange={this.handleLevelChange}/>
+        <div class="container button-row w-50 pt-5 d-flex justify-content-around">
+          <LevelButton size={6} level="Easy" handleLevelChange={this.handleLevelChange}/>
           <LevelButton size={9} level="Medium" handleLevelChange={this.handleLevelChange}/>
           <LevelButton size={12} level="Hard" handleLevelChange={this.handleLevelChange}/>
         </div>
