@@ -27,3 +27,7 @@
   width: 640px;
   height: 80%;
 }
+
+.button-row {
+  max-width: 300px;
+}

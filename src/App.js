@@ -22,7 +22,7 @@ export default class App extends Component {
     cards: this.setCards(6),
     flips: 0,
     matches: 0,
-    size: 0
+    size: 6
     };
   }
 
@@ -74,7 +74,15 @@ export default class App extends Component {
   * @return void
   **************************************/
   handleCardFlipAt = index => {
-    if (this.state.flips < 2) {
+  	var timeout;
+
+  	if (this.state.flips == 2) {
+  		console.log("hey");
+  		clearTimeout(timeout);
+  		this.resetCards();
+  	}
+    if (this.state.flips < 2 && !this.state.cards[index].show) {
+
 
     this.setState({
       //flip count increases
@@ -92,10 +100,8 @@ export default class App extends Component {
     },  () => {
       //when two cards are flipped check for a match
       if (this.state.flips == 2) {
-      setTimeout(this.resetCards, 2000);
+      	timeout = setTimeout(this.resetCards, 1000);
       }
-      console.log(this.state.matches);
-      console.log(this.state.cards.length / 2);
     });
 
     }
@@ -119,7 +125,6 @@ export default class App extends Component {
     if (card.match === false &&  card.show === true) {
       showingCards.push(card);
     }
-    console.log(showingCards);
     });
 
     //check if showing cards are matching
@@ -166,7 +171,9 @@ export default class App extends Component {
   handleLevelChange = (size) => {
     this.setState({
       cards: this.setCards(size),
-      size: size
+      size: size,
+      flips: 0,
+   		matches: 0
     })
   }
 
@@ -180,7 +187,8 @@ export default class App extends Component {
   handleWin = () => {
     this.setState({
       cards: this.setCards(this.state.size),
-      matches: 0
+      matches: 0,
+      flips: 0
     }, () =>{
       alert("You won! ");
     })
@@ -204,7 +212,7 @@ export default class App extends Component {
             );
           })}
         </div>
-        <div class="container button-row w-50 pt-5 d-flex justify-content-around">
+        <div className="container button-row w-50 pt-5 d-flex justify-content-around">
           <LevelButton size={6} level="Easy" handleLevelChange={this.handleLevelChange}/>
           <LevelButton size={9} level="Medium" handleLevelChange={this.handleLevelChange}/>
           <LevelButton size={12} level="Hard" handleLevelChange={this.handleLevelChange}/>

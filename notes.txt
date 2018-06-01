@@ -49,3 +49,16 @@ Bad practice to have styles in html (card)?
 
 
 
+5/21 updates
+
+reset cards after win don't flip
+clear the timer at match
+prevent reflips - check for flipped
+prettify code
+delete console logs
+pullout mapping from set states - assign to variable then set state
+
+handleflip
+bring flip increment above set state
+check for matches in handleflips - only reset cards when no match
+clear timeout when thrid card flipped
