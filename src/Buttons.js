@@ -5,7 +5,7 @@ export default class LevelButton extends Component {
 
 	render() {
 		return (
-			<button className="btn btn-secondary" onClick={() => {this.props.handleLevelChange(this.props.size)}}>{this.props.level}</button>
+			<button className="btn btn-secondary mb-5" onClick={() => {this.props.handleLevelChange(this.props.size)}}>{this.props.level}</button>
 		)
 	}
 };

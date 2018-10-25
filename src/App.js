@@ -24,6 +24,7 @@ export default class App extends Component {
     matches: 0,
     size: 0
     };
+    this.timeout;
   }
 
 
@@ -74,6 +75,8 @@ export default class App extends Component {
   * @return void
   **************************************/
   handleCardFlipAt = index => {
+    
+    
     if (this.state.flips < 2) {
 
     this.setState({
@@ -92,15 +95,11 @@ export default class App extends Component {
     },  () => {
       //when two cards are flipped check for a match
       if (this.state.flips == 2) {
-      setTimeout(this.resetCards, 2000);
+        this.timeout = setTimeout(this.resetCards, 1000);
       }
-      console.log(this.state.matches);
-      console.log(this.state.cards.length / 2);
     });
 
     }
-
-
   }
 
   /***********************************
@@ -119,7 +118,6 @@ export default class App extends Component {
     if (card.match === false &&  card.show === true) {
       showingCards.push(card);
     }
-    console.log(showingCards);
     });
 
     //check if showing cards are matching
@@ -164,9 +162,11 @@ export default class App extends Component {
   * @return void
   **************************************/
   handleLevelChange = (size) => {
+    clearTimeout(this.timeout);
     this.setState({
       cards: this.setCards(size),
-      size: size
+      size: size,
+      flips: 0
     })
   }
 
@@ -180,7 +180,8 @@ export default class App extends Component {
   handleWin = () => {
     this.setState({
       cards: this.setCards(this.state.size),
-      matches: 0
+      matches: 0,
+      flips: 0
     }, () =>{
       alert("You won! ");
     })
@@ -190,7 +191,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App bg-dark align-items-center p-5">
+      <div className="App align-items-center p-5">
          <div className="container card-layout">
             {this.state.cards.map((card, index) =>{
             return(
