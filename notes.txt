@@ -1,0 +1,64 @@
+Match App
+
+Functionality
+- click one card 
+- flip second card
+- if cards match, remain face up
+- while hidden cards > 0 
+	- reset state when new match found
+	- 'Reset button'
+	- exit loop when all found 
+- display 'Play Again' button (same action as reset)
+Extra
+- Difficulty levels - number of total cards
+- Timer
+
+
+Data
+- array of card objects - duplicate all entries and randomize order
+card : {
+	image: string
+	id: int
+	showing: bool
+}
+
+React Components
+- App
+	- Reset/play again button - onClick = reset()
+	- onMatch()
+	- onReset()
+	- onGameWon()
+	State
+		- cards
+- Card
+	- onClick = flip()
+	State
+		- showing/hidden
+		- matched/unmatched
+	Props
+		- image
+
+- (opt) Stopwatch
+
+
+
+Questions:
+
+Using an object?
+Bad practice to have styles in html (card)?
+
+
+
+5/21 updates
+
+reset cards after win don't flip
+clear the timer at match
+prevent reflips - check for flipped
+prettify code
+delete console logs
+pullout mapping from set states - assign to variable then set state
+
+handleflip
+bring flip increment above set state
+check for matches in handleflips - only reset cards when no match
+clear timeout when thrid card flipped
